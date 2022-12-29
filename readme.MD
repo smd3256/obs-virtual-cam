@@ -69,4 +69,4 @@ Run msbuild: `msbuild /m /p:Configuration=RelWithDebInfo ./build64/obs-virtualca
 
 # Donate
 
-If you like my work on this plugin , you can donate via [Paypal.me](https://www.paypal.me/obsvirtualcam)
+If you like this plugin, you can donate to the original author (Fenrirthviti) via [Paypal.me](https://www.paypal.me/obsvirtualcam)
