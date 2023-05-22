@@ -1,6 +1,6 @@
 # ⚠ Unofficial support
 
-You should really be using the integrated OBS Virtual Camera over this plugin. This is used as a stop-gap for things that don't yet work with the integrated Virtual Camera (like https://github.com/obsproject/obs-studio/issues/3635 and https://github.com/opencv/opencv/issues/19746). I do not plan on supporting this fork outside of necessary updates if OBS breaks the plugin. And will only do so until the aforementionned issue is fixed.
+You should really be using the integrated OBS Virtual Camera over this plugin. This is used as a stop-gap for things that don't yet work with the integrated Virtual Camera (like <https://github.com/obsproject/obs-studio/issues/3635> and <https://github.com/opencv/opencv/issues/19746>). I do not plan on supporting this fork outside of necessary updates if OBS breaks the plugin. And will only do so until the aforementionned issue is fixed.
 
 # OBS-VirtualCam
 
@@ -46,12 +46,12 @@ regsvr32 /n /i:"2" "C:\Program Files\obs-studio\bin\64bit\obs-virtualsource.dll"
 
 # Build
 
-You first need to install [cmake](https://cmake.org/download/), [Visual Studio](https://visualstudio.microsoft.com/), and [build OBS project](https://github.com/obsproject/obs-studio/wiki/Install-Instructions#building-obs-studio).
-Run cmake with the following variables:
+You first need to install [cmake](https://cmake.org/download/), [Visual Studio](https://visualstudio.microsoft.com/), and [build OBS project](https://github.com/obsproject/obs-studio/wiki/Install-Instructions#building-obs-studio).  
+You must also download `windows-deps-2023-04-12-x64` and `windows-deps-qt6-2023-04-12-x64` from [OBS Deps](https://github.com/obsproject/obs-deps/releases/tag/2023-04-12), then extract the zip as a folder of the same name and place them in `<project_root>/obs-deps/`
 
 * **QTDIR** (path): QT folder
 * **DepsPath** (path): FFmpeg folder in OBS dependencies package
-* **LIBOBS_INCLUDE_DIR** (path) : Libobs  include folder
+* **LIBOBS_INCLUDE_DIR** (path) : Libobs include folder
 * **LIBOBS_LIB** (filepath) : obs.lib path
 * **OBS_FRONTEND_LIB** (filepath): obs-frontend-api.lib path
 * **PTHREAD_LIB** (filepath): w32-pthread.lib path
@@ -60,8 +60,8 @@ ie:
 
 ```powershell
 cmake -S . -B build64 `
-  -DQTDIR=<...>/obs-deps/windows-deps-qt6-2022-08-02-x64 `
-  -DDepsPath=<...>/obs-deps/windows-deps-2022-08-02-x64 `
+  -DQTDIR=<...>/obs-deps/windows-deps-qt6-2023-04-12-x64 `
+  -DDepsPath=<...>/obs-deps/windows-deps-2023-04-12-x64 `
   -DLIBOBS_INCLUDE_DIR=<...>/obs-studio/libobs `
   -DLIBOBS_LIB=<...>/obs-studio/build64/libobs/RelWithDebInfo/obs.lib `
   -DOBS_FRONTEND_LIB=<...>/obs-studio/build64/UI/obs-frontend-api/RelWithDebInfo/obs-frontend-api.lib `

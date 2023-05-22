@@ -12,8 +12,6 @@ bool init_flip_filter(FlipContext* ctx,int width, int height, int format)
 	const AVFilter *buffersink = avfilter_get_by_name("buffersink");
 	AVFilterInOut *outputs = avfilter_inout_alloc();
 	AVFilterInOut *inputs = avfilter_inout_alloc();
-	enum AVPixelFormat pix_fmts[] = { (AVPixelFormat)format, AV_PIX_FMT_NONE };
-	AVBufferSinkParams *buffersink_params;
 
 	ctx->filter_graph = avfilter_graph_alloc();
 	sprintf(args,
@@ -27,11 +25,8 @@ bool init_flip_filter(FlipContext* ctx,int width, int height, int format)
 		return false;
 	}
 
-	buffersink_params = av_buffersink_params_alloc();
-	buffersink_params->pixel_fmts = pix_fmts;
 	ret = avfilter_graph_create_filter(&ctx->buffersink_ctx, buffersink, "out",
-		NULL, buffersink_params, ctx->filter_graph);
-	av_free(buffersink_params);
+		NULL, NULL, ctx->filter_graph);
 
 	if (ret < 0) {
 		avfilter_graph_free(&ctx->filter_graph);
