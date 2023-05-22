@@ -2,3 +2,5 @@ src/virtual-output/virtualoutput.rc
 src/virtual-source/virtualsource.rc
 build64/
 obs-deps/
+.vs/
+out/build/
