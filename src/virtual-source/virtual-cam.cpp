@@ -98,7 +98,18 @@ bool CVCamStream::CheckObsSetting()
 		if (obs_height % 2 != 0)
 			obs_height += 1;
 
-		format_list.push_front(struct format(obs_width, obs_height, 
+		// 15fps
+		if (obs_frame_time < 666666) {
+			format_list.push_front(struct format(obs_width, obs_height,
+				666666));
+		}
+		// 30fps (if available)
+		if (obs_frame_time < 333333) {
+			format_list.push_front(struct format(obs_width, obs_height,
+				333333));
+		}
+		// source fps
+		format_list.push_front(struct format(obs_width, obs_height,
 			obs_frame_time));
 	}
 
@@ -431,7 +442,6 @@ HRESULT STDMETHODCALLTYPE CVCamStream::GetStreamCaps(int iIndex,
 	pvi->bmiHeader.biWidth = format_list[iIndex].width;
 	pvi->bmiHeader.biHeight = format_list[iIndex].height;
 	pvi->AvgTimePerFrame = format_list[iIndex].time_per_frame;
-	pvi->AvgTimePerFrame = 333333;
 	pvi->bmiHeader.biCompression = MAKEFOURCC('Y', 'U', 'Y', '2');
 	pvi->bmiHeader.biBitCount = 16;
 	pvi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
