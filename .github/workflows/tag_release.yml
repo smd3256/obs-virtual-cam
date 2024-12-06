@@ -20,7 +20,7 @@ jobs:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
       - name: "Add msbuild to PATH"
-        uses: microsoft/setup-msbuild@v1.0.0
+        uses: microsoft/setup-msbuild@v2
       - name: "Checkout"
         uses: actions/checkout@v2
         with:
