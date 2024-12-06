@@ -64,7 +64,7 @@ jobs:
           7z x windows-deps-${{ env.OBS_DEPS }}-x64.zip -o"${{ github.workspace }}\cmbuild\deps"
       - name: "Restore OBS 64-bit build v${{ env.OBS_GIT_TAG }} from cache"
         id: build-cache-obs-64
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         env:
           CACHE_NAME: "build-cache-obs-64"
         with:
