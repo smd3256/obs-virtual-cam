@@ -10,7 +10,7 @@ obs-virutalcam is a plugin for obs-studio , transforming the output video to a v
 
 **Supported Platforms** : Windows 10+
 
-**Supported OBS Studio version** : 28.0.0+
+**Supported OBS Studio version** : 30.0.0+
 
 # Features
 
@@ -47,7 +47,7 @@ regsvr32 /n /i:"2" "C:\Program Files\obs-studio\bin\64bit\obs-virtualsource.dll"
 # Build
 
 You first need to install [cmake](https://cmake.org/download/), [Visual Studio](https://visualstudio.microsoft.com/), and [build OBS project](https://github.com/obsproject/obs-studio/wiki/Install-Instructions#building-obs-studio).  
-You must also download `windows-deps-2023-04-12-x64` and `windows-deps-qt6-2023-04-12-x64` from [OBS Deps](https://github.com/obsproject/obs-deps/releases/tag/2023-04-12), then extract the zip as a folder of the same name and place them in `<project_root>/obs-deps/`
+You must also download `windows-deps-2024-05-08-x64` and `windows-deps-qt6-2024-05-08-x64` from [OBS Deps](https://github.com/obsproject/obs-deps/releases/tag/2024-05-08), then extract the zip as a folder of the same name and place them in `<project_root>/obs-deps/`
 
 * **QTDIR** (path): QT folder
 * **DepsPath** (path): FFmpeg folder in OBS dependencies package
@@ -60,8 +60,8 @@ ie:
 
 ```powershell
 cmake -S . -B build64 `
-  -DQTDIR=<...>/obs-deps/windows-deps-qt6-2023-04-12-x64 `
-  -DDepsPath=<...>/obs-deps/windows-deps-2023-04-12-x64 `
+  -DQTDIR=<...>/obs-deps/windows-deps-qt6-2024-05-08-x64 `
+  -DDepsPath=<...>/obs-deps/windows-deps-2024-05-08-x64 `
   -DLIBOBS_INCLUDE_DIR=<...>/obs-studio/libobs `
   -DLIBOBS_LIB=<...>/obs-studio/build64/libobs/RelWithDebInfo/obs.lib `
   -DOBS_FRONTEND_LIB=<...>/obs-studio/build64/UI/obs-frontend-api/RelWithDebInfo/obs-frontend-api.lib `
