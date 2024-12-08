@@ -1,6 +1,6 @@
 # ⚠ Unofficial support
 
-You should really be using the [built-in OBS Virtual Camera](https://obsproject.com/kb/virtual-camera-guide) over this plugin. This is used as a stop-gap for things that don't yet work with the built-in Virtual Camera (like multi-camera support, ~~<https://github.com/obsproject/obs-studio/issues/3635> and <https://github.com/opencv/opencv/issues/19746>~~). I do not plan on supporting this fork outside of necessary updates if OBS breaks the plugin. And only plan on doing so until the aforementionned OpenCV issue is fixed.
+You should really be using the [built-in OBS Virtual Camera](https://obsproject.com/kb/virtual-camera-guide) over this plugin. This is used as a stop-gap for things that don't yet work with the built-in Virtual Camera (like multi-camera support). I do not plan on supporting this fork outside of necessary updates if OBS breaks the plugin.
 
 # OBS-VirtualCam
 
