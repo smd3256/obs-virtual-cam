@@ -14,8 +14,8 @@ jobs:
     name: "Windows 64bit"
     runs-on: windows-latest
     env:
-      OBS_DEPS: "2024-05-08"
-      CMAKE_GENERATOR: "Visual Studio 17 2022"
+      OBS_DEPS: "2026-07-15"
+      CMAKE_GENERATOR: "Visual Studio 18 2026"
       CMAKE_SYSTEM_VERSION: "10.0"
       # TODO: Don't ACTIONS_ALLOW_UNSECURE_COMMANDS
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
@@ -91,10 +91,10 @@ jobs:
         run: |
           mkdir .\build64
           cd .\build64
-          cmake -G "${{ env.CMAKE_GENERATOR }}" -A x64 -DCMAKE_SYSTEM_VERSION="${{ env.CMAKE_SYSTEM_VERSION }}" -DQTDIR="${{ github.workspace }}\cmbuild\QT" -DDepsPath="${{ github.workspace }}\cmbuild\deps" -DLibObs_DIR="${{ github.workspace }}\obs-studio\build64\libobs" -DLIBOBS_INCLUDE_DIR="${{ github.workspace }}\obs-studio\libobs" -DLIBOBS_LIB="${{ github.workspace }}\obs-studio\build64\libobs\RelWithDebInfo\obs.lib" -DOBS_FRONTEND_LIB="${{ github.workspace }}\obs-studio\build64\UI\obs-frontend-api\RelWithDebInfo\obs-frontend-api.lib" -DPTHREAD_LIB="${{ github.workspace }}\obs-studio\build64\deps\w32-pthreads\RelWithDebInfo\w32-pthreads.lib" ..
+          cmake -G "${{ env.CMAKE_GENERATOR }}" -A x64 -DCMAKE_SYSTEM_VERSION="${{ env.CMAKE_SYSTEM_VERSION }}" -DQTDIR="${{ github.workspace }}\cmbuild\QT" -DDepsPath="${{ github.workspace }}\cmbuild\deps" -DLibObs_DIR="${{ github.workspace }}\obs-studio\build64\libobs" -DLIBOBS_INCLUDE_DIR="${{ github.workspace }}\obs-studio\libobs" -DLIBOBS_LIB="${{ github.workspace }}\obs-studio\build64\libobs\RelWithDebInfo\obs.lib" -DOBS_FRONTEND_LIB="${{ github.workspace }}\obs-studio\build64\frontend\api\RelWithDebInfo\obs-frontend-api.lib" -DPTHREAD_LIB="${{ github.workspace }}\obs-studio\build64\deps\w32-pthreads\RelWithDebInfo\w32-pthreads.lib" ..
       - name: "Build obs-virtual-cam 64-bit"
         working-directory: ${{ github.workspace }}/obs-virtual-cam
-        run: msbuild /m /p:Configuration=RelWithDebInfo .\build64\obs-virtualcam.sln
+        run: msbuild /m /p:Configuration=RelWithDebInfo .\build64\obs-virtualcam.slnx
 
       - name: "Set release filename"
         shell: bash

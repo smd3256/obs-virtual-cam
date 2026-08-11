@@ -24,6 +24,10 @@ set(LIBOBS_LIB "LIBOBS_LIB-NOTFOUND" CACHE FILEPATH "OBS library")
 		message(FATAL_ERROR "Could not find OBS library !")
 	endif()
 
+get_filename_component(LIBOBS_DIR ${LIBOBS_LIB} DIRECTORY)
+
+set(OBSCONFIG_DIR "${LIBOBS_DIR}/../../config")
+
 set(OBS_FRONTEND_LIB "OBS_FRONTEND_LIB-NOTFOUND" CACHE FILEPATH "OBS frontend library")
 	if(OBS_FRONTEND_LIB EQUAL "OBS_FRONTEND_LIB-NOTFOUND")
 		message(FATAL_ERROR "Could not find OBS Frontend API\'s library !")
@@ -55,10 +59,10 @@ set(virtualoutput_HEADERS
 	)
 
 if(WIN32)
-	set(OBS_VIRTUALOUTPUT_VERSION_MAJOR 2)
-	set(OBS_VIRTUALOUTPUT_VERSION_MINOR 0)
-	set(OBS_VIRTUALOUTPUT_VERSION_PATCH 5)
-	set(OBS_VIRTUALOUTPUT_VERSION_STRING "2.0.5")
+	set(OBS_VIRTUALOUTPUT_VERSION_MAJOR 4)
+	set(OBS_VIRTUALOUTPUT_VERSION_MINOR 1)
+	set(OBS_VIRTUALOUTPUT_VERSION_PATCH 0)
+	set(OBS_VIRTUALOUTPUT_VERSION_STRING "4.1.0")
 	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/virtualoutput.rc.in ${CMAKE_CURRENT_SOURCE_DIR}/virtualoutput.rc)
 endif()
 
@@ -67,8 +71,9 @@ add_library(obs-virtualoutput MODULE
 	${virtualoutput_HEADERS})
 
 include_directories(
-	"${LIBOBS_INCLUDE_DIR}/../UI/obs-frontend-api"
+	"${LIBOBS_INCLUDE_DIR}/../frontend/api"
 	"${LIBOBS_INCLUDE_DIR}/../deps/w32-pthreads"
+	${OBSCONFIG_DIR}
 	${LIBOBS_INCLUDE_DIR}
 	${FFMPEG_INCLUDE_DIRS}
 	${Qt6_INCLUDES}
