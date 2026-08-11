@@ -85,7 +85,7 @@ jobs:
         working-directory: ${{ github.workspace }}/obs-studio
         run: |
           msbuild /m /p:Configuration=RelWithDebInfo .\build64\libobs\libobs.vcxproj
-          msbuild /m /p:Configuration=RelWithDebInfo .\build64\UI\obs-frontend-api\obs-frontend-api.vcxproj
+          msbuild /m /p:Configuration=RelWithDebInfo .\build64\frontend\api\obs-frontend-api.vcxproj
       - name: "Configure obs-virtual-cam 64-bit"
         working-directory: ${{ github.workspace }}/obs-virtual-cam
         run: |
