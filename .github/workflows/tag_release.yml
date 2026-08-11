@@ -16,8 +16,6 @@ jobs:
       OBS_DEPS: "2026-07-15"
       CMAKE_GENERATOR: "Visual Studio 18 2026"
       CMAKE_SYSTEM_VERSION: "10.0"
-      # TODO: Don't ACTIONS_ALLOW_UNSECURE_COMMANDS
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
       - name: "Add msbuild to PATH"
         uses: microsoft/setup-msbuild@v2
@@ -37,9 +35,9 @@ jobs:
         working-directory: ${{ github.workspace }}/obs-studio
         run: |
           git fetch --prune --unshallow
-          echo ::set-env name=OBS_GIT_BRANCH::$(git rev-parse --abbrev-ref HEAD)
-          echo ::set-env name=OBS_GIT_HASH::$(git rev-parse --short HEAD)
-          echo ::set-env name=OBS_GIT_TAG::$(git describe --tags --abbrev=0)
+          echo "OBS_GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+          echo "OBS_GIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "OBS_GIT_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
       - name: "Checkout last OBS-Studio release (${{ env.OBS_GIT_TAG }})"
         shell: bash
         working-directory: ${{ github.workspace }}/obs-studio
@@ -51,9 +49,9 @@ jobs:
         working-directory: ${{ github.workspace }}/obs-virtual-cam
         run: |
           git fetch --prune --unshallow
-          echo ::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}
-          echo ::set-env name=GIT_HASH::$(git rev-parse --short HEAD)
-          echo ::set-env name=GIT_TAG::$(git describe --tags --abbrev=0)
+          echo "GIT_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
+          echo "GIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "GIT_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
       - name: "Install prerequisite: QT"
         run: |
           curl -kLO https://github.com/obsproject/obs-deps/releases/download/${{ env.OBS_DEPS }}/windows-deps-qt6-${{ env.OBS_DEPS }}-x64.zip -f --retry 5 -C -
@@ -90,7 +88,7 @@ jobs:
         run: |
           mkdir .\build64
           cd .\build64
-          cmake -G "${{ env.CMAKE_GENERATOR }}" -A x64 -DCMAKE_SYSTEM_VERSION="${{ env.CMAKE_SYSTEM_VERSION }}" -DQTDIR="${{ github.workspace }}\cmbuild\QT" -DDepsPath="${{ github.workspace }}\cmbuild\deps" -DLibObs_DIR="${{ github.workspace }}\obs-studio\build64\libobs" -DLIBOBS_INCLUDE_DIR="${{ github.workspace }}\obs-studio\libobs" -DLIBOBS_LIB="${{ github.workspace }}\obs-studio\build64\libobs\RelWithDebInfo\obs.lib" -DOBS_FRONTEND_LIB="${{ github.workspace }}\obs-studio\build64\frontend\api\obs-frontend-api.lib" -DPTHREAD_LIB="${{ github.workspace }}\obs-studio\build64\deps\w32-pthreads\RelWithDebInfo\w32-pthreads.lib" ..
+          cmake -G "${{ env.CMAKE_GENERATOR }}" -A x64 -DCMAKE_SYSTEM_VERSION="${{ env.CMAKE_SYSTEM_VERSION }}" -DQTDIR="${{ github.workspace }}\cmbuild\QT" -DDepsPath="${{ github.workspace }}\cmbuild\deps" -DLibObs_DIR="${{ github.workspace }}\obs-studio\build64\libobs" -DLIBOBS_INCLUDE_DIR="${{ github.workspace }}\obs-studio\libobs" -DLIBOBS_LIB="${{ github.workspace }}\obs-studio\build64\libobs\RelWithDebInfo\obs.lib" -DOBS_FRONTEND_LIB="${{ github.workspace }}\obs-studio\build64\frontend\api\RelWithDebInfo\obs-frontend-api.lib" -DPTHREAD_LIB="${{ github.workspace }}\obs-studio\build64\deps\w32-pthreads\RelWithDebInfo\w32-pthreads.lib" ..
       - name: "Build obs-virtual-cam 64-bit"
         working-directory: ${{ github.workspace }}/obs-virtual-cam
         run: msbuild /m /p:Configuration=RelWithDebInfo .\build64\obs-virtualcam.slnx
@@ -98,7 +96,7 @@ jobs:
         shell: bash
         run: |
           FILENAME="obs-virtualcam-${{ env.GIT_TAG }}-Windows"
-          echo "::set-env name=WIN_FILENAME::$FILENAME"
+          echo "WIN_FILENAME=$FILENAME" >> $GITHUB_ENV
       - name: "Package obs-virtual-cam"
         working-directory: ${{ github.workspace }}/obs-virtual-cam
         run: |
@@ -112,15 +110,12 @@ jobs:
           ren .\build-package\bin\64bit\obs-virtualsource.stripped.pdb obs-virtualsource.pdb
           mkdir release
           7z a ".\release\${{ env.WIN_FILENAME }}.zip" ".\build-package\*"
-      - name: Install NSIS
+      - name: Install NSIS and build obs-virtualcam installer
         working-directory: ${{ github.workspace }}/obs-virtual-cam
         run: |
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
           scoop bucket add extras
           scoop install nsis
-      - name: Build obs-virtualcam installer
-        working-directory: ${{ github.workspace }}/obs-virtual-cam
-        run: |
           cd installer
           makensis /DVERSION=${{ env.GIT_TAG }} installer.nsi
       - name: "Publish ${{ env.WIN_FILENAME }}.zip"
@@ -148,7 +143,7 @@ jobs:
         shell: bash
         id: get_version
         run: |
-          echo ::set-env name=TAG_VERSION::${GITHUB_REF/refs\/tags\//}
+          echo "TAG_VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
       - name: "Create Release"
         id: create_release
         uses: actions/create-release@v1
